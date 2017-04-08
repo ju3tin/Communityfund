@@ -7,8 +7,35 @@ var multipart = require('connect-multiparty');
 
 var db = require('../db');
 
+router.get('/', function (req, res) {
+  db.find({ selector: { '@type': 'Offer' } }, function (err, body) {
+    if (err) {
+      throw err;
+    }
+
+    var offers = body.docs.map(function (doc) {
+      var files = Object.keys(doc._attachments);
+
+      return Object.assign({}, doc, {
+        _attachments: files.reduce(function (attachments, filename) {
+
+          attachments[filename] = Object.assign({}, doc._attachments[filename], {
+            url: '/offers/' + doc._id + '/files/' + filename,
+          });
+
+          return attachments;
+        }, {}),
+      });
+    });
+
+    res.render('offers/index.html', {
+      offers: offers,
+    });
+  });
+});
+
 router.get('/:id/files/:filename', function (req, res) {
-  const params = req.params;
+  var params = req.params;
 
   db.attachment.get(params.id, params.filename, function (err, body) {
     if (err) {
@@ -29,11 +56,22 @@ router.get('/:id/files/:filename', function (req, res) {
 router.post('/create', multipart(), function (req, res) {
   var file = req.files.invoice;
 
-  console.log(1, req.body);
-
   db.insert({
     '@type': 'Offer',
+    description: req.body.description,
     preferredPaymentDate: req.body['preferred-payment-date'],
+    amount: {
+      currency: 'GBP',
+      value: 20000,
+    },
+    broker: {
+      '@type': 'Broker',
+      name: 'Big bad business',
+    },
+    customer: {
+      '@type': 'Customer',
+      name: 'Small business',
+    },
   }, null, onDocumentInserted);
 
   function onDocumentInserted(err, doc) {
@@ -61,10 +99,7 @@ router.post('/create', multipart(), function (req, res) {
       throw err;
     }
 
-    res.write(JSON.stringify({
-      success: true,
-    }));
-    res.end();
+    res.redirect('/offers');
   }
 });
 

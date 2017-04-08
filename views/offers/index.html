@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Favorites Organizer powered by Cloudant</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="/style/style.css" />
+  </head>
+  <body>
+    <h1>Offers page</h1>
+
+    <ul>
+    <% offers.forEach(function (offer) { %>
+      <li><%= offer._id %>,
+        <dl>
+          <dt>Description:</dt>
+          <dd><%= offer.description || 'N/A' %></dd>
+          <dt>Amount:</dt>
+          <dd><%= offer.amount.currency %> <%= (offer.amount.value / 100).toFixed(2) %></dd>
+          <dt>Customer:</dt>
+          <dd><%= offer.customer.name %></dd>
+          <dt>Broker:</dt>
+          <dd><%= offer.broker.name %></dd>
+        </dl>
+        <ul>
+          <h5>attachments</h5>
+          <% Object.keys(offer._attachments).forEach(function (filename) { %>
+            <% var attachment = offer._attachments[filename] %>
+            <li><a target="_blank" href="<%= attachment.url %>"><%= filename %></a></li>
+          <% }) %>
+        </ul>
+      </li>
+    <% }) %>
+    </ul>
+  </body>
+</html>
