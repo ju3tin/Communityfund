@@ -6,17 +6,19 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "4.13.x",
-    "ejs": "2.4.x",
-    "cloudant": "1.4.x",
     "body-parser": "1.14.x",
+    "cloudant": "1.4.x",
+    "connect-multiparty": "2.0.x",
+    "ejs": "2.4.x",
+    "errorhandler": "1.4.x",
+    "express": "4.13.x",
     "method-override": "2.3.x",
     "morgan": "1.6.x",
-    "errorhandler": "1.4.x",
-    "connect-multiparty": "2.0.x"
+    "open_payments_cloud_application_api": "^0.9.0",
+    "uuid": "^3.0.1"
   },
   "repository": {},
   "engines": {
-  	"node": "4.x"
+    "node": "4.x"
   }
 }
