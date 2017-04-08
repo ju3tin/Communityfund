@@ -8,10 +8,12 @@
     <link rel="stylesheet" href="/style/style.css" />
   </head>
   <body>
-    <h1>TODO</h1>
+    <form name="users.create" method="POST" action="/users/create">
+      <input type="text" name="name" placeholder="Name">
+      <input type="text" name="email" placeholder="Email">
+      <input type="number" name="managed-account-id" placeholder="Managed account ID">
 
-    <ul>
-      <li>Create a <a href="/offers/new">new offer</a></li>
-    </ul>
+      <button type="submit">Create user</button>
+    </form>
   </body>
 </html>

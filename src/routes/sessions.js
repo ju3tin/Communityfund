@@ -5,7 +5,12 @@ var router = express.Router();
 var api = require('../api');
 
 router.post('/create', function (req, res) {
-  api.login(req, res).then(function () {
+  var email = req.body.email;
+
+  api.login(email).then(function (response) {
+    req.session.token = response.token;
+    req.session.user = response.user;
+
     res.redirect('/home');
   });
 });
