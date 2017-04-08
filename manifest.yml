@@ -1,0 +1,10 @@
+applications:
+- path: .
+  memory: 512M
+  instances: 1
+  domain: eu-gb.mybluemix.net
+  name: Community fund 2
+  host: Community-fund-2
+  disk_quota: 1024M
+  services:
+  - Community fund 2-cloudantNoSQLDB
