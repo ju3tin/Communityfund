@@ -33,14 +33,14 @@ app.use(session({
   cookie: { secure: false },
 }));
 
-var api = require('./src/api');
-app.use(function (req, res, next) {
-  if (api.isLoggedIn(req) || req.path === '/' || req.path.match(/^\/(sessions|images|style)\//)) {
-    next();
-  } else {
-    res.redirect('/');
-  }
-});
+// var api = require('./src/api');
+// app.use(function (req, res, next) {
+//   if (api.isLoggedIn(req) || req.path === '/' || req.path.match(/^\/(sessions|images|style)\//)) {
+//     next();
+//   } else {
+//     res.redirect('/');
+//   }
+// });
 
 // all environments
 app.set('port', process.env.PORT || 3000);

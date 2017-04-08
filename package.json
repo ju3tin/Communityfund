@@ -8,7 +8,7 @@
   "dependencies": {
     "body-parser": "1.14.x",
     "cloudant": "1.4.x",
-    "connect-multiparty": "2.0.x",
+    "connect-multiparty": "^2.0.0",
     "ejs": "2.4.x",
     "errorhandler": "1.4.x",
     "express": "4.13.x",

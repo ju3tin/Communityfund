@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="/style/style.css" />
   </head>
   <body>
-    <form name="offers.create" method="POST" action="/offers/create">
-      <input type="date" name="preferred-date">
+    <form name="offers.create" method="POST" action="/offers/create"
+        enctype="multipart/form-data">
+      <input type="date" name="preferred-payment-date">
       <input type="file" name="invoice">
 
       <button type="submit">Submit for approval</button>
