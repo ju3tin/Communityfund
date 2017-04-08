@@ -5,9 +5,10 @@ var rp = require('request-promise');
 
 module.exports = {
   login: login,
+  isLoggedIn: isLoggedIn,
 };
 
-function login(req, res) {
+function login(req) {
   return rp({
     uri: 'https://app-gateway.hackathon.ixaris.com/api/auth/login',
     json: true,
@@ -22,6 +23,10 @@ function login(req, res) {
       credentialCode: 'team-20',
     }
   }).then(function (response) {
-    res.setHeader('Authentication', 'Bearer: ' + response.token);
+    req.session.token = response.token;
   });
+}
+
+function isLoggedIn(req) {
+  return Boolean(req.session && req.session.token);
 }

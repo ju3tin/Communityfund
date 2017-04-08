@@ -6,6 +6,7 @@
 var express = require('express'),
     http = require('http'),
     path = require('path'),
+    session = require('express-session'),
     fs = require('fs');
 
 var app = express();
@@ -25,11 +26,26 @@ var errorHandler = require('errorhandler');
 var multipart = require('connect-multiparty')
 var multipartMiddleware = multipart();
 
+app.use(session({
+  secret: 'shhhh',
+  resave: true,
+  saveUninitialized: true,
+  cookie: { secure: false },
+}));
+
+var api = require('./src/api');
+app.use(function (req, res, next) {
+  if (api.isLoggedIn(req) || req.path === '/' || req.path.match(/^\/(sessions|images)/)) {
+    next();
+  } else {
+    res.redirect('/');
+  }
+});
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-app.engine('html', require('ejs').renderFile);
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({
     extended: true
@@ -86,7 +102,6 @@ function initDBConnection() {
 }
 
 initDBConnection();
-
 app.use('/sessions', require('./src/routes/sessions'));
 app.use('/offers', require('./src/routes/offers'));
 
