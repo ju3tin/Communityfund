@@ -1,0 +1,422 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Slider for Bootstrap, from Twitter</title>
+    <link href="../scripts/css/bootstrap.css" rel="stylesheet">
+    <link href="../scripts/css/slider.css" rel="stylesheet">
+	<style>
+	.container {
+		background: #fff;
+	}
+	#alert {
+		display: none;
+	}
+  #sl2 {
+    width: 400px;
+  }
+  #RGB {
+    height: 20px;
+    background: rgb(128, 128, 128);
+  }
+  #RC .slider-selection {
+    background: #FF8282;
+  }
+  #RC .slider-handle {
+    background: red;
+  }
+  #GC .slider-selection {
+    background: #428041;
+  }
+  #GC .slider-handle {
+    background: green;
+  }
+  #BC .slider-selection {
+    background: #8283FF;
+  }
+  #BC .slider-handle {
+    border-bottom-color: blue;
+  }
+  #R, #G, #B {
+    width: 300px;
+  }
+  #eg .slider-selection {
+    background: #BABABA;
+  }
+	</style>
+    <link href="../scripts/js/google-code-prettify/prettify.css" rel="stylesheet">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+  <div class="container">
+    <section id="typeahead">
+      <div class="page-header">
+        <h1>Slider for Bootstrap <small>bootstrap-slider.js</small></h1>
+      </div><script type="text/javascript"><!--
+google_ad_client = "ca-pub-5673865389945635";
+/* Recomandata */
+google_ad_slot = "2811626550";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+      <div class="row">
+        <div class="span3 columns">
+          <h3>About</h3>
+          <p>Slider component with different options</p>
+		  <ul>
+			<li>vertical or horizontal orientation</li>
+			<li>minimum and maxim values</li>
+      <li>step incrementor</li>
+      <li>range selector</li>
+      <li>3 shapes for handles</li>
+      <li>touch capabale</li>
+		  </ul>
+          <p><a href="slider.zip" target="_blank" class="btn">Download</a></p>
+		  <p>
+		  <!-- Place this tag where you want the +1 button to render. -->
+<div class="g-plusone" data-size="medium" data-annotation="inline" data-width="120"></div>
+
+<!-- Place this tag after the last +1 button tag. -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+		  </p>
+          <h3>Change log</h3>
+		  <dl>
+      <dt>11/4/2013</dt>
+      <dd>Added touch events support. Just add Modernizr to your page (thaks to <a href="http://heuristicmedia.com">Tony Wallace</a>)</dd>
+      <dd>Added 'formater' option to format the values before they are sent to the tooltip</dd>
+      <dt>07/3/2013</dt>
+      <dd>Fixed 'setValue'</dd>
+      <dt>23/2/2013</dt>
+      <dd>Fixed events names</dd>
+      <dt>16/2/2013</dt>
+      <dd>Initial release</dd>
+		  </dl>
+        </div>
+        <div class="span9 columns">
+          <h2>Example</h2>
+          <p>Basic example with custom formater</p>
+          <div class="well">
+            <input type="text" class="span2" value="4" id="sl1" >
+          </div>
+          <p>Range selector, options specified via data attribute.</p>
+          <div class="well">
+            Filter by price interval: <b>€ 10</b> <input type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]" id="sl2" > <b>€ 1000</b>
+          </div>
+          <p>Using events to work with the values and style the selection and handles via CSS. The tooltip is disabled and diferent shapes for the handles</p>
+          <div class="well">
+            <p>
+            <b>R</b> <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="128" data-slider-id="RC" id="R" data-slider-tooltip="hide" data-slider-handle="square" >
+            </p>
+            <p>
+            <b>G</b> <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="128" data-slider-id="GC" id="G" data-slider-tooltip="hide" data-slider-handle="round" >
+            </p>
+            <p>
+            <b>B</b> <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="128" data-slider-id="BC" id="B" data-slider-tooltip="hide" data-slider-handle="triangle" >
+            </p>
+            <div id="RGB"></div>
+          </div>
+          <p>Vertical sliders</p>
+          <div class="well">
+          <table id="eg">
+            <tbody>
+              <tr>
+                <td>
+                  <input type="text" class="span2" value="" data-slider-min="-20" data-slider-max="20" data-slider-step="1" data-slider-value="-13" data-slider-orientation="vertical" data-slider-selection="after" data-slider-tooltip="hide">
+                </td>
+                <td>
+                  <input type="text" class="span2" value="" data-slider-min="-20" data-slider-max="20" data-slider-step="1" data-slider-value="-11" data-slider-orientation="vertical" data-slider-selection="after" data-slider-tooltip="hide">
+                </td>
+                <td>
+                  <input type="text" class="span2" value="" data-slider-min="-20" data-slider-max="20" data-slider-step="1" data-slider-value="-6" data-slider-orientation="vertical" data-slider-selection="after" data-slider-tooltip="hide">
+                </td>
+                <td>
+                  <input type="text" class="span2" value="" data-slider-min="-20" data-slider-max="20" data-slider-step="1" data-slider-value="-4" data-slider-orientation="vertical" data-slider-selection="after" data-slider-tooltip="hide">
+                </td>
+                <td>
+                  <input type="text" class="span2" value="" data-slider-min="-20" data-slider-max="20" data-slider-step="1" data-slider-value="-6" data-slider-orientation="vertical" data-slider-selection="after" data-slider-tooltip="hide">
+                </td>
+                <td>
+                  <input type="text" class="span2" value="" data-slider-min="-20" data-slider-max="20" data-slider-step="1" data-slider-value="-11" data-slider-orientation="vertical" data-slider-selection="after"data-slider-tooltip="hide">
+                </td>
+                <td>
+                  <input type="text" class="span2" value="" data-slider-min="-20" data-slider-max="20" data-slider-step="1" data-slider-value="-14" data-slider-orientation="vertical" data-slider-selection="after"data-slider-tooltip="hide">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+          <hr>
+          <h2>Using bootstrap-slider.js</h2>
+          <p>Call the slider via javascript:</p>
+          <pre class="prettyprint linenums">$('.slider').slider()</pre>
+          <h3>Options</h3>
+          <table class="table table-bordered table-striped">
+            <thead>
+             <tr>
+               <th style="width: 100px;">Name</th>
+               <th style="width: 50px;">type</th>
+               <th style="width: 100px;">default</th>
+               <th>description</th>
+             </tr>
+            </thead>
+            <tbody>
+              <tr>
+               <td>min</td>
+               <td>float</td>
+               <td>0</td>
+               <td>minimum possible value</td>
+             </tr>
+              <tr>
+               <td>max</td>
+               <td>float</td>
+               <td>10</td>
+               <td>maximum possible value</td>
+             </tr>
+              <tr>
+               <td>step</td>
+               <td>float</td>
+               <td>1</td>
+               <td>increment step</td>
+             </tr>
+              <tr>
+               <td>orientation</td>
+               <td>string</td>
+               <td>'horizontal'</td>
+               <td>set the orientation. Accepts 'vertical' or 'horizontal'</td>
+             </tr>
+              <tr>
+               <td>value</td>
+               <td>float|array</td>
+               <td>5</td>
+               <td>initial value. Use array to have a range slider.</td>
+             </tr>
+              <tr>
+               <td>selection</td>
+               <td>string</td>
+               <td>'before'</td>
+               <td>selection plament. Accepts: 'before', 'after' or 'none'. In case of a range slider, the selection will be placed between the handles</td>
+             </tr>
+              <tr>
+               <td>tooltip</td>
+               <td>string</td>
+               <td>'show'</td>
+               <td>whatever to show or hide the tooltip. Accepts: 'show' or 'hide'</td>
+             </tr>
+              <tr>
+               <td>handle</td>
+               <td>string</td>
+               <td>'round'</td>
+               <td>handle shape. Accepts: 'round', 'square' or 'triangle'</td>
+             </tr>
+              <tr>
+               <td>formater</td>
+               <td>function</td>
+               <td>returns the plain value</td>
+               <td>formater callback. Return the value wanted to be displayed in the tooltip</td>
+             </tr>
+            </tbody>
+          </table>
+
+          <h3>Markup</h3>
+          <p>You can use data attributes to set up the configuration.</p>
+<pre class="prettyprint linenums">
+&lt;input type=&quot;text&quot; class=&quot;span2&quot; value=&quot;&quot; data-slider-min=&quot;-20&quot; data-slider-max=&quot;20&quot; data-slider-step=&quot;1&quot; data-slider-value=&quot;-14&quot; data-slider-orientation=&quot;vertical&quot; data-slider-selection=&quot;after&quot;data-slider-tooltip=&quot;hide&quot;&gt;
+</pre>
+          <h3>Methods</h3>
+          <h4>.slider(options)</h4>
+          <p>Initializes a slider.</p>
+          <h4>.slider('getValue')</h4>
+          <p>Get the value.</p>
+          <h4>.slider('setValue', value)</h4>
+          <p>Set a new value.</p>
+		  
+          <h3>Events</h3>
+          <p>Slider class exposes a few events for manipulating the value.</p>
+          <table class="table table-bordered table-striped">
+            <thead>
+             <tr>
+               <th style="width: 150px;">Event</th>
+               <th>Description</th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+               <td>slideStart</td>
+               <td>This event fires when a dragging starts.</td>
+             </tr>
+             <tr>
+               <td>slide</td>
+               <td>This event is fired when the slider is dragged.</td>
+             </tr>
+             <tr>
+               <td>slideStop</td>
+               <td>This event is fired when a dragging stops.</td>
+             </tr>
+            </tbody>
+          </table>
+<pre class="prettyprint linenums">
+$(&#039;#dp5&#039;).slider()
+  .on(&#039;slide&#039;, function(ev){
+    ....
+  });
+</pre>
+        </div>
+      </div><p>Hosted by <a href="https://www.mediasecure.org/" title="Dedicated servers" target="_blank" style="color: #8FB0CF;">MediaSecure</a></p>
+    </section>
+</div>
+
+<style>
+#cookieConsent {
+	position: fixed;
+	bottom: 0;
+	left: 50%;
+	width: 940px;
+	margin: 0 0 0 -471px;
+	padding: 10px;
+	border: 1px solid #bbb;
+	z-index: 10000;
+	background: #F9F9F9;
+	color: #444;
+	display: none;
+}
+
+#cookieConsent a {
+	color: #0088cc;
+}
+</style>
+<div id="cookieConsent">
+	eyecon.ro is using cookies to personalise content and ads, to provide social media features and to analyse our traffic. I also share information about your use of my site with my social media, advertising and analytics partners.<a href="/cookies.html">See details</a><br><br>
+	By continuing to browse the site you are agreeing to my use of cookies. <a href="#" id="cookieConsentAgree"><b>? Continue</b></a>
+</div>
+<script>
+var monster = {
+	set: function(name, value, days, path, secure) {
+		var date = new Date(),
+			expires = '',
+			type = typeof(value),
+			valueToUse = '',
+			secureFlag = '';
+		path = path || "/";
+		if (days) {
+			date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+			expires = "; expires=" + date.toUTCString();
+		}
+		if (type === "object" && type !== "undefined") {
+			if (!("JSON" in window)) throw "Bummer, your browser doesn't support JSON parsing.";
+			valueToUse = encodeURIComponent(JSON.stringify({
+				v: value
+			}));
+		}
+		else {
+			valueToUse = encodeURIComponent(value);
+		}
+		if (secure) {
+			secureFlag = "; secure";
+		}
+		document.cookie = name + "=" + valueToUse + expires + "; path=" + path + secureFlag;
+	},
+	get: function(name) {
+		var nameEQ = name + "=",
+			ca = document.cookie.split(';'),
+			value = '',
+			firstChar = '',
+			parsed = {};
+		for (var i = 0; i < ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+			if (c.indexOf(nameEQ) === 0) {
+				value = decodeURIComponent(c.substring(nameEQ.length, c.length));
+				firstChar = value.substring(0, 1);
+				if (firstChar == "{") {
+					try {
+						parsed = JSON.parse(value);
+						if ("v" in parsed) return parsed.v;
+					}
+					catch (e) {
+						return value;
+					}
+				}
+				if (value == "undefined") return undefined;
+				return value;
+			}
+		}
+		return null;
+	}
+};
+if (!monster.get('cookieConsent')) {
+	var cookieConsentAct = function() {
+			document.getElementById('cookieConsent').style.display = 'none';
+			monster.set('cookieConsent', 1, 360, '/');
+		};
+	document.getElementById('cookieConsent').style.display = 'block';
+	var cookieConsentEl = document.getElementById('cookieConsentAgree');
+	if (cookieConsentEl.addEventListener) {
+		cookieConsentEl.addEventListener('click', cookieConsentAct, false);
+	}
+	else if (cookieConsentEl.attachEvent) {
+		cookieConsentEl.attachEvent("onclick", cookieConsentAct);
+	}
+	else {
+		cookieConsentEl["onclick"] = cookieConsentAct;
+	}
+}
+</script>
+    <script src="js/google-code-prettify/prettify.js"></script>
+    <script src="js/modernizr.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap-slider.js"></script>
+	<script>
+	if (top.location != location) {
+    top.location.href = document.location.href ;
+  }
+		$(function(){
+			window.prettyPrint && prettyPrint();
+
+        $('#sl1').slider({
+          formater: function(value) {
+            return 'Current value: '+value;
+          }
+        });
+        $('#sl2').slider();
+
+        var RGBChange = function() {
+          $('#RGB').css('background', 'rgb('+r.getValue()+','+g.getValue()+','+b.getValue()+')')
+        };
+
+        var r = $('#R').slider()
+                .on('slide', RGBChange)
+                .data('slider');
+        var g = $('#G').slider()
+                .on('slide', RGBChange)
+                .data('slider');
+        var b = $('#B').slider()
+                .on('slide', RGBChange)
+                .data('slider');
+
+        $('#eg input').slider();
+    });
+  </script>
+	<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-106117-1";
+urchinTracker();
+</script>
+  </body>
+ </html>

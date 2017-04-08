@@ -8,3 +8,4 @@ applications:
   disk_quota: 1024M
   services:
   - Community fund 2-cloudantNoSQLDB
+  - availability-monitoring-auto
