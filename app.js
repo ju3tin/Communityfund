@@ -1,10 +1,9 @@
 /**
  * Module dependencies.
  */
+'use strict';
 
 var express = require('express'),
-    routes = require('./routes'),
-    user = require('./routes/user'),
     http = require('http'),
     path = require('path'),
     fs = require('fs');
@@ -90,7 +89,7 @@ function initDBConnection() {
 
 initDBConnection();
 
-app.get('/', routes.index);
+app.use('/sessions', require('./src/routes/sessions'));
 
 function createResponseData(id, name, value, attachments) {
 
