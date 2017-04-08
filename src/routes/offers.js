@@ -7,6 +7,25 @@ var multipart = require('connect-multiparty');
 
 var db = require('../db');
 
+router.get('/:id/files/:filename', function (req, res) {
+  const params = req.params;
+
+  db.attachment.get(params.id, params.filename, function (err, body) {
+    if (err) {
+      res.status(500);
+      res.setHeader('Content-Type', 'text/plain');
+      res.write('Error: ' + err);
+      res.end();
+      return;
+    }
+
+    res.status(200);
+    res.setHeader('Content-Disposition', 'inline; filename="' + params.filename + '"');
+    res.write(body);
+    res.end();
+  });
+});
+
 router.post('/create', multipart(), function (req, res) {
   var file = req.files.invoice;
 
