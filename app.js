@@ -35,7 +35,7 @@ app.use(session({
 
 var api = require('./src/api');
 app.use(function (req, res, next) {
-  if (api.isLoggedIn(req) || req.path === '/' || req.path.match(/^\/(sessions|images)/)) {
+  if (api.isLoggedIn(req) || req.path === '/' || req.path.match(/^\/(sessions|images|style)\//)) {
     next();
   } else {
     res.redirect('/');
@@ -46,6 +46,7 @@ app.use(function (req, res, next) {
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({
     extended: true
