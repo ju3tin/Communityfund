@@ -1,6 +1,6 @@
 // index.js
 
-var REST_DATA = 'api/favorites';
+var REST_DATA = '/api/favorites';
 var KEY_ENTER = 13;
 var defaultItems = [
 

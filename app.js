@@ -16,9 +16,7 @@ var cloudant;
 
 var fileToUpload;
 
-var dbCredentials = {
-    dbName: 'my_sample_db'
-};
+var dbCredentials = require('./src/config').dbCredentials;
 
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
@@ -90,6 +88,7 @@ function initDBConnection() {
 initDBConnection();
 
 app.use('/sessions', require('./src/routes/sessions'));
+app.use('/offers', require('./src/routes/offers'));
 
 function createResponseData(id, name, value, attachments) {
 
