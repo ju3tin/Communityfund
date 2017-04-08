@@ -12,7 +12,7 @@
 
     <ul>
     <% offers.forEach(function (offer) { %>
-      <li><%= offer._id %>,
+      <li>
         <dl>
           <dt>Description:</dt>
           <dd><%= offer.description || 'N/A' %></dd>
@@ -22,6 +22,8 @@
           <dd><%= offer.customer.name %></dd>
           <dt>Broker:</dt>
           <dd><%= offer.broker.name %></dd>
+          <dt>Number of bids:</dt>
+          <dd><%= offer.bids.length %></dd>
         </dl>
         <ul>
           <h5>attachments</h5>
@@ -30,6 +32,8 @@
             <li><a target="_blank" href="<%= attachment.url %>"><%= filename %></a></li>
           <% }) %>
         </ul>
+
+        <a href="<%= offer.bidUrl %>">Make a bid</a>
       </li>
     <% }) %>
     </ul>
