@@ -11,29 +11,29 @@
     <h1>Offers page</h1>
 
     <ul>
-    <% offers.forEach(function (offer) { %>
+    <% campaigns.forEach(function (campaign) { %>
       <li>
         <dl>
           <dt>Description:</dt>
-          <dd><%= offer.description || 'N/A' %></dd>
+          <dd><%= campaign.description || 'N/A' %></dd>
           <dt>Amount:</dt>
-          <dd><%= offer.amount.currency %> <%= (offer.amount.value / 100).toFixed(2) %></dd>
+          <dd><%= campaign.amount.currency %> <%= (campaign.amount.value / 100).toFixed(2) %></dd>
           <dt>Customer:</dt>
-          <dd><%= offer.customer.name %></dd>
+          <dd><%= campaign.customer.name %></dd>
           <dt>Broker:</dt>
-          <dd><%= offer.broker.name %></dd>
+          <dd><%= campaign.broker.name %></dd>
           <dt>Number of bids:</dt>
-          <dd><%= offer.bids.length %></dd>
+          <dd><%= campaign.bids.length %></dd>
         </dl>
         <ul>
           <h5>attachments</h5>
-          <% Object.keys(offer._attachments).forEach(function (filename) { %>
-            <% var attachment = offer._attachments[filename] %>
+          <% Object.keys(campaign._attachments).forEach(function (filename) { %>
+            <% var attachment = campaign._attachments[filename] %>
             <li><a target="_blank" href="<%= attachment.url %>"><%= filename %></a></li>
           <% }) %>
         </ul>
 
-        <a href="<%= offer.bidUrl %>">Make a bid</a>
+        <a href="<%= campaign.bidUrl %>">Make a bid</a>
       </li>
     <% }) %>
     </ul>

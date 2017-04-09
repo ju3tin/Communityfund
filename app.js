@@ -104,7 +104,7 @@ function initDBConnection() {
 
 initDBConnection();
 app.use('/sessions', require('./src/routes/sessions'));
-app.use('/offers', require('./src/routes/offers'));
+app.use('/campaigns', require('./src/routes/campaigns'));
 app.use('/users', require('./src/routes/users'));
 
 function createResponseData(id, name, value, attachments) {

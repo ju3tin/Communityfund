@@ -51,8 +51,8 @@ function isLoggedIn(req) {
   return Boolean(req.session && req.session.token);
 }
 
-function acceptBid(token, offer, bidIndex) {
-  var bid = offer.bids[bidIndex];
+function acceptBid(token, campaign, bidIndex) {
+  var bid = campaign.bids[bidIndex];
 
   return rp({
       uri: 'https://app-gateway.hackathon.ixaris.com/api/transfers/_/create',
@@ -74,7 +74,7 @@ function acceptBid(token, offer, bidIndex) {
           type: 'managed_accounts'
         },
         destinationInstrumentId: {
-          id: offer.customer.managedAccountId,
+          id: campaign.customer.managedAccountId,
           type: 'managed_accounts'
         },
         fees: [],

@@ -11,17 +11,17 @@ var db = require('../db');
 router.get('/', function (req, res) {
   var user = req.session.user;
 
-  db.find({ selector: { '@type': 'Offer', 'customer._id': { '$ne': user._id } } }, function (err, body) {
+  db.find({ selector: { '@type': 'Campaign', 'customer._id': { '$ne': user._id } } }, function (err, body) {
     if (err) {
       throw err;
     }
 
-    var offers = body.docs.map(function (doc) {
-      return presentOffer(doc);
+    var campaigns = body.docs.map(function (doc) {
+      return presentCampaign(doc);
     });
 
-    res.render('offers/index.html', {
-      offers: offers,
+    res.render('campaigns/index.html', {
+      campaigns: campaigns,
     });
   });
 });
@@ -29,17 +29,17 @@ router.get('/', function (req, res) {
 router.get('/my', function (req, res) {
   var user = req.session.user;
 
-  db.find({ selector: { '@type': 'Offer', 'customer._id': user._id } }, function (err, body) {
+  db.find({ selector: { '@type': 'Campaign', 'customer._id': user._id } }, function (err, body) {
     if (err) {
       throw err;
     }
 
-    var offers = body.docs.map(function (doc) {
-      return presentOffer(doc);
+    var campaigns = body.docs.map(function (doc) {
+      return presentCampaign(doc);
     });
 
-    res.render('offers/my.html', {
-      offers: offers,
+    res.render('campaigns/my.html', {
+      campaigns: campaigns,
     });
   });
 });
@@ -52,8 +52,8 @@ router.get('/:id/bids/new', function (req, res) {
       throw err;
     }
 
-    res.render('offers/bids/new.html', {
-      offer: doc,
+    res.render('campaigns/bids/new.html', {
+      campaign: doc,
     });
   });
 });
@@ -66,11 +66,11 @@ router.get('/:id/bids/:index', function (req, res) {
       throw err;
     }
 
-    var offer = presentOffer(doc);
+    var campaign = presentCampaign(doc);
 
-    res.render('offers/bids/show.html', {
-      bid: offer.bids[params.index],
-      offer: offer,
+    res.render('campaigns/bids/show.html', {
+      bid: campaign.bids[params.index],
+      campaign: campaign,
     });
   });
 });
@@ -78,60 +78,60 @@ router.get('/:id/bids/:index', function (req, res) {
 router.post('/:id/bids/:index/accept', function (req, res) {
   var params = req.params;
 
-  db.get(params.id, onRetrieveOffer);
+  db.get(params.id, onRetrieveCampaign);
 
-  function onRetrieveOffer(err, offer) {
+  function onRetrieveCampaign(err, campaign) {
     if (err) {
       throw err;
     }
 
-    api.acceptBid(req.session.token, offer, params.index)
-      .then(createOnTransactionComplete(offer));
+    api.acceptBid(req.session.token, campaign, params.index)
+      .then(createOnTransactionComplete(campaign));
   }
 
-  function createOnTransactionComplete(offer) {
+  function createOnTransactionComplete(campaign) {
     return function onTransactionComplete() {
-      db.insert(Object.assign({}, offer, {
+      db.insert(Object.assign({}, campaign, {
         acceptedBid: params.index,
-      }), offer._id, onUpdateOffer);
+      }), campaign._id, onUpdateCampaign);
     };
   }
 
-  function onUpdateOffer(err) {
+  function onUpdateCampaign(err) {
     if (err) {
       throw err;
     }
 
-    res.redirect('/offers/my');
+    res.redirect('/campaigns/my');
   }
 });
 
 router.post('/bids/create', function (req, res) {
   var user = req.session.user;
 
-  db.get(req.body['offer-id'], onRetrieveOffer);
+  db.get(req.body['campaign-id'], onRetrieveCampaign);
 
-  function onRetrieveOffer(err, offer) {
+  function onRetrieveCampaign(err, campaign) {
     if (err) {
       throw err;
     }
 
-    var bids = offer.bids || [];
+    var bids = campaign.bids || [];
     bids.push({
       '@type': 'Bid',
       cut: req.body['percentage-cut'],
       entity: user,
     });
 
-    db.insert(Object.assign({}, offer, { bids: bids }), offer._id, onUpdateOffer);
+    db.insert(Object.assign({}, campaign, { bids: bids }), campaign._id, onUpdateCampaign);
   }
 
-  function onUpdateOffer(err) {
+  function onUpdateCampaign(err) {
     if (err) {
       throw err;
     }
 
-    res.redirect('/offers');
+    res.redirect('/campaigns');
   }
 });
 
@@ -160,7 +160,7 @@ router.post('/create', multipart(), function (req, res) {
   var user = req.session.user;
 
   db.insert({
-    '@type': 'Offer',
+    '@type': 'Campaign',
     description: req.body.description,
     preferredPaymentDate: req.body['preferred-payment-date'],
     bids: [],
@@ -201,25 +201,25 @@ router.post('/create', multipart(), function (req, res) {
       throw err;
     }
 
-    res.redirect('/offers');
+    res.redirect('/campaigns/my');
   }
 });
 
-function presentOffer(offer) {
-  var files = Object.keys(offer._attachments);
+function presentCampaign(campaign) {
+  var files = Object.keys(campaign._attachments);
 
-  return Object.assign({}, offer, {
-    bidUrl: '/offers/' + offer._id + '/bids/new',
-    bids: offer.bids.map(function (bid, index) {
+  return Object.assign({}, campaign, {
+    bidUrl: '/campaigns/' + campaign._id + '/bids/new',
+    bids: campaign.bids.map(function (bid, index) {
       return Object.assign({}, bid, {
-        reviewUrl: '/offers/' + offer._id + '/bids/' + index,
-        acceptUrl: '/offers/' + offer._id + '/bids/' + index + '/accept',
+        reviewUrl: '/campaigns/' + campaign._id + '/bids/' + index,
+        acceptUrl: '/campaigns/' + campaign._id + '/bids/' + index + '/accept',
       });
     }),
     _attachments: files.reduce(function (attachments, filename) {
 
-      attachments[filename] = Object.assign({}, offer._attachments[filename], {
-        url: '/offers/' + offer._id + '/files/' + filename,
+      attachments[filename] = Object.assign({}, campaign._attachments[filename], {
+        url: '/campaigns/' + campaign._id + '/files/' + filename,
       });
 
       return attachments;

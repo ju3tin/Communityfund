@@ -7,32 +7,66 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Signin Template for Bootstrap</title>
+    <title>Login</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="/style/bootstrap.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="/style/style.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Dosis:400" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/css/materialize.min.css"  media="screen,projection"/>
   </head>
 
   <body>
+    <nav class="nav-extended brown darken-1">
+      <div class="nav-wrapper row">
+        <a href="/" class="brand-logo col s1 green-text">
+          <img class="responsive-img" src="/images/community-fund-logo.svg" alt="">
+        </a>
+      </div>
+
+      <div class="nav-content row" style="padding-bottom:10rem">
+        <div class="container">
+          <div class="row">
+            <div class="col s12">
+              <h2 style="font-family:Dosis">Community Fund</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
 
     <div class="container">
+      <div class="row">
+        <div class="col s12 m6 right">
+          <div class="card white" style="margin-top:-10rem">
+            <form class="card-content" method="POST" action="/sessions/create">
+              <div class="row">
+                <div class="col s12 black-text">
+                  <p>
+                    Begin your journey here
+                  </p>
+                </div>
+              </div>
 
-      <form class="form-signin" method="POST" action="/sessions/create">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
+              <div class="row"></div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <input type="email" name="email" id="email" class="validate" required autofocus style="box-sizing:border-box">
+                  <label for="email" class="sr-only">Email address</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <input type="password" name="password" id="password" class="validate" required style="box-sizing:border-box">
+                  <label for="password" class="sr-only">Password</label>
+                </div>
+              </div>
+
+              <button class="btn green" type="submit">Login</button>
+            </form>
+          </div>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
+      </div>
 
     </div> <!-- /container -->
 
@@ -42,5 +76,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../scripts/ie10-viewport-bug-workaround.js"></script>
+
+    <script type="text/javascript" src="/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/js/materialize.min.js"></script>
   </body>
 </html>
