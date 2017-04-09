@@ -102,7 +102,9 @@ router.post('/:id/bids/:index/accept', function (req, res) {
       throw err;
     }
 
-    res.redirect('/campaigns/my');
+    setTimeout(function () {
+      res.redirect('/campaigns/success');
+    }, 2000);
   }
 });
 

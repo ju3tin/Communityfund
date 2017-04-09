@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>My campaigns</title>
+    <title>Success</title>
 
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Dosis:400" rel="stylesheet">
@@ -56,101 +56,29 @@
 
         <div class="nav-content row">
           <div class="container">
-            <span class="nav-title" style="font-family:Dosis">My campaigns</span>
-
-            <ul class="tabs tabs-transparent">
-              <li class="tab"><a class="active" href="#">Approved</a></li>
-              <li class="tab"><a href="#">Pending</a></li>
-              <li class="tab"><a href="#">Past</a></li>
-            </ul>
-
-            <a class="btn-floating btn-large halfway-fab waves-effect waves-light green" href="/campaigns/new">
-              <i class="material-icons">add</i>
-            </a>
+            <div class="row"></div>
           </div>
         </div>
       </nav>
     </header>
 
     <main class="container">
-      <nav>
-        <div class="nav-wrapper purple darken-1">
-          <form>
-            <div class="input-field">
-              <input id="search" type="search" required>
-              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-              <i class="material-icons">close</i>
+      <div class="row">
+        <div class="col s12 m6 offset-m3">
+          <div class="card">
+            <div class="card-image">
+              <img src="http://anthillonline.com/wp-content/uploads/2014/01/high-five.jpg" alt="">
             </div>
-          </form>
-        </div>
-      </nav>
+            <div class="card-content row">
+              <span class="card-title">Success</span>
 
-      <ul class="collection">
-        <% if (campaigns.length === 0) { %>
-          <div class="row">
-            <div class="col s12">
-              <p>No campaigns found</p>
+              <p>
+                The transaction was successfully processed
+              </p>
             </div>
           </div>
-        <% } %>
-
-        <% campaigns.forEach(function (campaign) { %>
-          <li class="collection-item avatar">
-            <img class="circle" src="http://campusmaps.umn.edu/sites/campusmaps.umn.edu/files/styles/building_photos/public/wbob_150722_8444.jpg?itok=iF2p5fft" alt="">
-
-            <span class="title" style="line-height:2.5em"><span style="font-size:2.5em;font-weight:100">£<%= (campaign.amount.value / 100).toFixed(2) %></span> from <a href="#"><%= campaign.broker.name %></a></span>
-
-            <p class="grey-text">
-              <%= campaign.customer.name %>
-            </p>
-
-            <p class="grey-text">
-              <% if (campaign.bids.length === 0) { %>
-                No bids yet
-              <% } else { %>
-                Highest bid: <span style="font-weight:100">£<%= (Math.max(campaign.bids.map(function (bid) { return campaign.amount.value * (100 - parseInt(bid.cut, 10)) / 100 })) / 100).toFixed(2) %></span>
-              <% } %>
-            </p>
-
-            <p>
-              <%= campaign.description || 'N/A' %>
-            </p>
-
-            <br>
-
-            <div class="divider"></div>
-
-            <br>
-
-            <% if (campaign.bids.length === 0) { %>
-              <p>No bids yet</p>
-            <% } else { %>
-              <ul class="collection">
-                <% campaign.bids.forEach(function (bid) { %>
-                  <li class="collection-item avatar">
-                    <img class="circle" src="http://bookcrush.in/wp-content/uploads/2013/05/Stages-of-Movie-Production.jpg" alt="">
-
-                    <span class="title">
-                      <span style="font-weight:100">£<%= Math.max(campaign.bids.map(function (bid) { return campaign.amount.value * (100 - parseInt(bid.cut, 10)) / 100; }) / 100).toFixed(2) %></span>
-                      from <%= bid.entity.name %>
-                    </span>
-
-                    <p class="grey-text">
-                      <%= bid.cut %>% cut
-                    </p>
-
-                    <form class="secondary-content" method="POST" action="<%= bid.acceptUrl %>">
-                      <button class="btn btn-flat" type="submit">ACCEPT</button>
-                    </form>
-                  </li>
-                <% }) %>
-              </ul>
-            <% } %>
-
-            <a class="btn btn-flat secondary-content" href="#">Review</a>
-          </li>
-        <% }) %>
-      </ul>
+        </div>
+      </div>
     </main> <!-- /container -->
 
     <footer class="page-footer purple darken-1">
