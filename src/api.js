@@ -67,7 +67,7 @@ function acceptBid(token, campaign, bidIndex) {
         profileId: 97593089101269760,
         amount: {
           currency: 'GBP',
-          amount: 100,
+          amount: Math.ceil(campaign.amount.value * (100 - parseInt(bid.cut, 10)) / 100),
         },
         sourceInstrumentId: {
           id: bid.entity.managedAccountId,
