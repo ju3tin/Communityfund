@@ -59,7 +59,8 @@
             <span class="nav-title" style="font-family:Dosis">My campaigns</span>
 
             <ul class="tabs tabs-transparent">
-              <li class="tab"><a class="active" href="#">Current</a></li>
+              <li class="tab"><a class="active" href="#">Approved</a></li>
+              <li class="tab"><a href="#">Pending</a></li>
               <li class="tab"><a href="#">Past</a></li>
             </ul>
 
@@ -72,9 +73,21 @@
     </header>
 
     <main class="container">
-      <ul class="card">
+      <nav>
+        <div class="nav-wrapper brown darken-1">
+          <form>
+            <div class="input-field">
+              <input id="search" type="search" required>
+              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+              <i class="material-icons">close</i>
+            </div>
+          </form>
+        </div>
+      </nav>
+
+      <ul class="collection">
         <% if (campaigns.length === 0) { %>
-          <div class="card-content row">
+          <div class="row">
             <div class="col s12">
               <p>No campaigns found</p>
             </div>
@@ -82,45 +95,59 @@
         <% } %>
 
         <% campaigns.forEach(function (campaign) { %>
-          <li class="card-content row">
-            <div class="col s12">
-              <dl>
-                <dt>Description:</dt>
-                <dd><%= campaign.description || 'N/A' %></dd>
-                <dt>Amount:</dt>
-                <dd><%= campaign.amount.currency %> <%= (campaign.amount.value / 100).toFixed(2) %></dd>
-                <dt>Customer:</dt>
-                <dd><%= campaign.customer.name %></dd>
-                <dt>Broker:</dt>
-                <dd><%= campaign.broker.name %></dd>
-                <dt>Number of bids:</dt>
-                <dd><%= campaign.bids.length %></dd>
-              </dl>
-              <ul>
-                <h5>attachments</h5>
-                <% Object.keys(campaign._attachments).forEach(function (filename) { %>
-                  <% var attachment = campaign._attachments[filename] %>
-                  <li><a target="_blank" href="<%= attachment.url %>"><%= filename %></a></li>
-                <% }) %>
-              </ul>
+          <li class="collection-item avatar">
+            <img class="circle" src="http://campusmaps.umn.edu/sites/campusmaps.umn.edu/files/styles/building_photos/public/wbob_150722_8444.jpg?itok=iF2p5fft" alt="">
 
-              <ul>
-                <h5>Bids</h5>
+            <span class="title" style="line-height:2.5em"><span style="font-size:2.5em;font-weight:100">£<%= (campaign.amount.value / 100).toFixed(2) %></span> from <a href="#"><%= campaign.broker.name %></a></span>
 
+            <p class="grey-text">
+              <%= campaign.customer.name %>
+            </p>
+
+            <p class="grey-text">
+              <% if (campaign.bids.length === 0) { %>
+                No bids yet
+              <% } else { %>
+                Highest bid: <span style="font-weight:100">£<%= (Math.max(campaign.bids.map(function (bid) { return campaign.amount.value * (100 - parseInt(bid.cut, 10)) / 100 })) / 100).toFixed(2) %></span>
+              <% } %>
+            </p>
+
+            <p>
+              <%= campaign.description || 'N/A' %>
+            </p>
+
+            <br>
+
+            <div class="divider"></div>
+
+            <br>
+
+            <% if (campaign.bids.length === 0) { %>
+              <p>No bids yet</p>
+            <% } else { %>
+              <ul class="collection">
                 <% campaign.bids.forEach(function (bid) { %>
-                  <li>
-                    <dl>
-                      <dt>Entity</dt>
-                      <dd><%= bid.entity.name %></dd>
-                      <dt>Cut</dt>
-                      <dd><%= bid.cut %>%</dd>
-                    </dl>
+                  <li class="collection-item avatar">
+                    <img class="circle" src="http://bookcrush.in/wp-content/uploads/2013/05/Stages-of-Movie-Production.jpg" alt="">
 
-                    <a href="<%= bid.reviewUrl %>">review bid</a>
+                    <span class="title">
+                      <span style="font-weight:100">£<%= Math.max(campaign.bids.map(function (bid) { return campaign.amount.value * (100 - parseInt(bid.cut, 10)) / 100; }) / 100).toFixed(2) %></span>
+                      from <%= bid.entity.name %>
+                    </span>
+
+                    <p class="grey-text">
+                      <%= bid.cut %>% cut
+                    </p>
+
+                    <form class="secondary-content" method="POST" action="<%= bid.acceptUrl %>">
+                      <button class="btn btn-flat" type="submit">ACCEPT</button>
+                    </form>
                   </li>
                 <% }) %>
               </ul>
-            </div>
+            <% } %>
+
+            <a class="btn btn-flat secondary-content" href="#">Review</a>
           </li>
         <% }) %>
       </ul>

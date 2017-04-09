@@ -1,41 +1,202 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Favorites Organizer powered by Cloudant</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <link rel="stylesheet" href="/style/style.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Explore campaigns</title>
+
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Dosis:400" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/css/materialize.min.css"  media="screen,projection"/>
+
+    <style>
+      body {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+
+      main {
+        flex: 1 0 auto;
+      }
+    </style>
   </head>
+
   <body>
-    <h1>Offers page</h1>
+    <header>
+      <ul id="accountdropdown" class="dropdown-content">
+        <li><a href="#">Accounts</a></li>
+        <li><a href="#">Settings</a></li>
+        <li class="divider"></li>
+        <li><a href="#">Sign out</a></li>
+      </ul>
 
-    <ul>
-    <% campaigns.forEach(function (campaign) { %>
-      <li>
-        <dl>
-          <dt>Description:</dt>
-          <dd><%= campaign.description || 'N/A' %></dd>
-          <dt>Amount:</dt>
-          <dd><%= campaign.amount.currency %> <%= (campaign.amount.value / 100).toFixed(2) %></dd>
-          <dt>Customer:</dt>
-          <dd><%= campaign.customer.name %></dd>
-          <dt>Broker:</dt>
-          <dd><%= campaign.broker.name %></dd>
-          <dt>Number of bids:</dt>
-          <dd><%= campaign.bids.length %></dd>
-        </dl>
-        <ul>
-          <h5>attachments</h5>
-          <% Object.keys(campaign._attachments).forEach(function (filename) { %>
-            <% var attachment = campaign._attachments[filename] %>
-            <li><a target="_blank" href="<%= attachment.url %>"><%= filename %></a></li>
-          <% }) %>
-        </ul>
+      <nav class="nav-extended brown darken-1">
+        <div class="nav-wrapper row">
+          <a href="/" class="brand-logo col s1 green-text">
+            <img class="responsive-img" src="/images/community-fund-logo.svg" alt="">
 
-        <a href="<%= campaign.bidUrl %>">Make a bid</a>
-      </li>
-    <% }) %>
-    </ul>
+            <span style="font-family:Dosis">
+              Community Fund
+            </span>
+          </a>
+
+          <ul class="right hide-on-med-and-down">
+            <li>
+              <a class="dropdown-button" href="#!" data-activates="accountdropdown">
+                My Profile<i class="material-icons right">supervisor_account</i>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="nav-content row">
+          <div class="container">
+            <span class="nav-title" style="font-family:Dosis">My campaigns</span>
+
+            <ul class="tabs tabs-transparent">
+              <li class="tab"><a class="active" href="#">Recent</a></li>
+              <li class="tab"><a href="#">Popular</a></li>
+              <li class="tab"><a href="#">Least risk</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container">
+      <nav>
+        <div class="nav-wrapper brown darken-1">
+          <form>
+            <div class="input-field">
+              <input id="search" type="search" required>
+              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+              <i class="material-icons">close</i>
+            </div>
+          </form>
+        </div>
+      </nav>
+
+      <ul class="collection">
+        <% if (campaigns.length === 0) { %>
+          <div class="row">
+            <div class="col s12">
+              <p>No campaigns found</p>
+            </div>
+          </div>
+        <% } %>
+
+        <% campaigns.forEach(function (campaign) { %>
+          <li class="collection-item avatar">
+            <img class="circle" src="http://campusmaps.umn.edu/sites/campusmaps.umn.edu/files/styles/building_photos/public/wbob_150722_8444.jpg?itok=iF2p5fft" alt="">
+
+            <span class="title" style="line-height:2.5em"><span style="font-size:2.5em;font-weight:100">£<%= (campaign.amount.value / 100).toFixed(2) %></span> from <a href="#"><%= campaign.broker.name %></a></span>
+
+            <p class="grey-text">
+              <%= campaign.customer.name %>
+            </p>
+
+            <p class="grey-text">
+              <% if (campaign.bids.length === 0) { %>
+                No bids yet
+              <% } else { %>
+                Highest bid: <span style="font-weight:100">£<%= (Math.max(campaign.bids.map(function (bid) { return campaign.amount.value * (100 - parseInt(bid.cut, 10)) / 100 })) / 100).toFixed(2) %></span>
+              <% } %>
+            </p>
+
+            <p>
+              <%= campaign.description || 'N/A' %>
+            </p>
+
+            <a class="btn btn-flat secondary-content" href="<%= campaign.bidUrl %>">Make a bid</a>
+          </li>
+        <% }) %>
+      </ul>
+    </main> <!-- /container -->
+
+    <footer class="page-footer brown darken-1">
+      <div class="container">
+        <div class="row">
+          <div class="col l4 s12">
+            <ul>
+              <li>
+                <a class="grey-text text-lighten-3" href="/">
+                  Help
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col l2 offset-l2 s12">
+            <ul>
+              <li>
+                <a class="grey-text text-lighten-3" href="/">
+                  Home
+                </a>
+              </li>
+
+              <li>
+                <a class="grey-text text-lighten-3" href="/">
+                  Media
+                </a>
+              </li>
+
+              <li>
+                <a class="grey-text text-lighten-3" href="/">
+                  How it works
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col l2 offset-l2 s12">
+            <ul>
+              <li>
+                <a class="grey-text text-lighten-3" href="#!">
+                  <img src="https://cdn0.iconfinder.com/data/icons/social-flat-rounded-rects/512/twitter-512.png" width="25" height="25" alt="">
+                </a>
+              </li>
+
+              <li>
+                <a class="grey-text text-lighten-3" href="#!">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/F_icon.svg/1024px-F_icon.svg.png" width="25" height="25" alt="">
+                </a>
+              </li>
+
+              <li>
+                <a class="grey-text text-lighten-3" href="#!">
+                  Contact us
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-copyright">
+        <div class="container">
+          © 2017 Community Fund Ltd
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../scripts/ie10-viewport-bug-workaround.js"></script>
+
+    <script type="text/javascript" src="/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/js/materialize.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $(".dropdown-button").dropdown({ hover: false });
+      });
+    </script>
   </body>
 </html>

@@ -1,172 +1,193 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Favorites Organizer powered by Cloudant</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <link href="/dependencies/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-slider.css" rel="stylesheet">
-    <link rel="stylesheet" href="/style/style.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
 
-    <style type='text/css'>
+    <title>Explore campaigns</title>
 
-      /* Space out content a bit */
-    body {
-      padding-top: 20px;
-      padding-bottom: 20px;
-    }
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Dosis:400" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/css/materialize.min.css"  media="screen,projection"/>
 
-    h1 small {
-      font-size: 51%;
-    }
-
-    /* Everything but the jumbotron gets side spacing for mobile first views */
-    .header,
-    .marketing,
-    .footer {
-      padding-left: 15px;
-      padding-right: 15px;
-    }
-
-    /* Custom page header */
-    .header {
-      border-bottom: 1px solid #e5e5e5;
-    }
-    /* Make the masthead heading the same height as the navigation */
-    .header h3 {
-      margin-top: 0;
-      margin-bottom: 0;
-      line-height: 40px;
-      padding-bottom: 19px;
-    }
-
-    /* Custom page footer */
-    .footer {
-      padding-top: 19px;
-      color: #777;
-      border-top: 1px solid #e5e5e5;
-    }
-
-    /* Customize container */
-    .container {
-      min-width: 640px;
-    }
-    @media (min-width: 768px) {
-      .container {
-        max-width: 1000px;
+    <style>
+      body {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
       }
-    }
-    .container-narrow > hr {
-      margin: 30px 0;
-    }
 
-    /* Main marketing message and sign up button */
-    .title {
-      text-align: center;
-      border-bottom: 1px solid #e5e5e5;
-    }
-
-    /* Responsive: Portrait tablets and up */
-    @media screen and (min-width: 768px) {
-      /* Remove the padding we set earlier */
-      .header,
-      .footer {
-        padding-left: 0;
-        padding-right: 0;
+      main {
+        flex: 1 0 auto;
       }
-      /* Space out the masthead */
-      .header {
-        margin-bottom: 30px;
-      }
-      /* Remove the bottom border on the jumbotron for visual effect */
-      .title {
-        border-bottom: 0;
-      }
-    }
-
-    .well {
-      background-color: #E0E0E0;
-    }
-
-    .slider-example {
-      padding-top: 10px;
-      padding-bottom: 55px;
-      margin: 35px 0;
-    }
-
-    #destroyEx5Slider, #ex6CurrentSliderValLabel, #ex7-enabled {
-      margin-left: 45px;
-    }
-
-    #ex6SliderVal {
-      color: green;
-    }
-
-    #slider12a .slider-track-high, #slider12c .slider-track-high {
-      background: green;
-    }
-
-    #slider12b .slider-track-low, #slider12c .slider-track-low {
-      background: red;
-    }
-
-    #slider12c .slider-selection {
-      background: yellow;
-    }
-
-    #slider22 .slider-selection {
-      background: #2196f3;
-    }
-
-    #slider22 .slider-rangeHighlight {
-      background: #f70616;
-    }
-
     </style>
   </head>
+
   <body>
-    <dl>
-      <dt>Description:</dt>
-      <dd><%= campaign.description || 'N/A' %></dd>
-      <dt>Amount:</dt>
-      <dd><%= campaign.amount.currency %> <%= (campaign.amount.value / 100).toFixed(2) %></dd>
-      <dt>Customer:</dt>
-      <dd><%= campaign.customer.name %></dd>
-      <dt>Broker:</dt>
-      <dd><%= campaign.broker.name %></dd>
-      <dt>Number of bids:</dt>
-      <dd><%= campaign.bids.length %></dd>
-    </dl>
-    <ul>
-      <h5>attachments</h5>
-      <% Object.keys(campaign._attachments).forEach(function (filename) { %>
-      <% var attachment = campaign._attachments[filename] %>
-      <li><a target="_blank" href="<%= attachment.url %>"><%= filename %></a></li>
-      <% }) %>
-    </ul>
+    <header>
+      <ul id="accountdropdown" class="dropdown-content">
+        <li><a href="#">Accounts</a></li>
+        <li><a href="#">Settings</a></li>
+        <li class="divider"></li>
+        <li><a href="#">Sign out</a></li>
+      </ul>
 
-    <h1>Make a bid</h1>
-    <form method="POST" action="/campaigns/bids/create">
-      <input type="hidden" value="<%= campaign._id %>" name="campaign-id">
+      <nav class="nav-extended brown darken-1">
+        <div class="nav-wrapper row">
+          <a href="/" class="brand-logo col s1 green-text">
+            <img class="responsive-img" src="/images/community-fund-logo.svg" alt="">
 
-      <div class="well">
-        <input id="ex1" name="percentage-cut" data-slider-id='ex1Slider' type="text" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="14"/>
+            <span style="font-family:Dosis">
+              Community Fund
+            </span>
+          </a>
+
+          <ul class="right hide-on-med-and-down">
+            <li>
+              <a class="dropdown-button" href="#!" data-activates="accountdropdown">
+                My Profile<i class="material-icons right">supervisor_account</i>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="nav-content row">
+          <div class="container">
+            <span class="nav-title" style="font-family:Dosis">My campaigns</span>
+
+            <ul class="tabs tabs-transparent">
+              <li class="tab"><a class="active" href="#">Recent</a></li>
+              <li class="tab"><a href="#">Popular</a></li>
+              <li class="tab"><a href="#">Least risk</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container">
+      <div class="card">
+        <div class="card-content row">
+          <div class="col s12 m8">
+            <div class="row">
+              <div class="col s4">
+                <img class="circle responsive-img" src="http://campusmaps.umn.edu/sites/campusmaps.umn.edu/files/styles/building_photos/public/wbob_150722_8444.jpg?itok=iF2p5fft" alt="">
+              </div>
+
+              <div class="col s12">
+                <p>
+                  <span style="font-size:2.5em;font-weight:100">£<%= (campaign.amount.value / 100).toFixed(2) %></span> from <a href="#"><%= campaign.broker.name %></a>
+                </p>
+
+                <p class="grey-text">
+                  <%= campaign.customer.name %>
+                </p>
+
+                <p>
+                  <%= campaign.description || 'N/A' %>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col s12 m4">
+            <form method="POST" action="/campaigns/bids/create">
+              <input type="hidden" value="<%= campaign._id %>" name="campaign-id">
+
+              <p class="range-field">
+                <input type="range" id="percentage-cut" min="0" max="100" name="percentage-cut">
+                <label for="percentage-cut">Percentage cut</label>
+              </p>
+
+              <button class="btn" type="submit">Make bid</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main> <!-- /container -->
+
+    <footer class="page-footer brown darken-1">
+      <div class="container">
+        <div class="row">
+          <div class="col l4 s12">
+            <ul>
+              <li>
+                <a class="grey-text text-lighten-3" href="/">
+                  Help
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col l2 offset-l2 s12">
+            <ul>
+              <li>
+                <a class="grey-text text-lighten-3" href="/">
+                  Home
+                </a>
+              </li>
+
+              <li>
+                <a class="grey-text text-lighten-3" href="/">
+                  Media
+                </a>
+              </li>
+
+              <li>
+                <a class="grey-text text-lighten-3" href="/">
+                  How it works
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col l2 offset-l2 s12">
+            <ul>
+              <li>
+                <a class="grey-text text-lighten-3" href="#!">
+                  <img src="https://cdn0.iconfinder.com/data/icons/social-flat-rounded-rects/512/twitter-512.png" width="25" height="25" alt="">
+                </a>
+              </li>
+
+              <li>
+                <a class="grey-text text-lighten-3" href="#!">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/F_icon.svg/1024px-F_icon.svg.png" width="25" height="25" alt="">
+                </a>
+              </li>
+
+              <li>
+                <a class="grey-text text-lighten-3" href="#!">
+                  Contact us
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
 
-      <button type="submit">Make bid</button>
-    </form>
+      <div class="footer-copyright">
+        <div class="container">
+          © 2017 Community Fund Ltd
+        </div>
+      </div>
+    </footer>
 
-    <script type='text/javascript' src="/dependencies/js/jquery.min.js"></script>
-    <script type='text/javascript' src="/js/bootstrap-slider.js"></script>
-    <script type='text/javascript'>
-      $(document).ready(function() {
-        $('#ex1').slider({
-          formatter: function(value) {
-            return value + '%';
-          }
-        });
-      })
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../scripts/ie10-viewport-bug-workaround.js"></script>
+
+    <script type="text/javascript" src="/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/js/materialize.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $(".dropdown-button").dropdown({ hover: false });
+      });
     </script>
   </body>
 </html>
