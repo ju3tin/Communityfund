@@ -7,11 +7,11 @@
   },
   "dependencies": {
     "body-parser": "1.14.x",
-    "cloudant": "1.4.x",
+    "cloudant": "1.6.0",
     "connect-multiparty": "^2.0.0",
     "ejs": "2.4.x",
     "errorhandler": "1.4.x",
-    "express": "4.13.x",
+    "express": "4.16.0",
     "express-session": "^1.15.2",
     "method-override": "2.3.x",
     "morgan": "1.6.x",
