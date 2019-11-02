@@ -14,7 +14,7 @@
     "express": "4.13.x",
     "express-session": "^1.15.2",
     "method-override": "2.3.x",
-    "morgan": "1.6.x",
+    "morgan": "1.9.x",
     "request": "^2.81.0",
     "request-promise": "^4.2.0",
     "uuid": "^3.0.1"
