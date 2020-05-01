@@ -3,7 +3,9 @@
   "version": "0.0.2",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "body-parser": "1.14.x",
@@ -17,10 +19,12 @@
     "morgan": "1.6.x",
     "request": "^2.81.0",
     "request-promise": "^4.2.0",
-    "uuid": "^3.0.1"
+    "uuid": "^3.0.1",
+    "snyk": "^1.316.1"
   },
   "repository": {},
   "engines": {
     "node": "4.x"
-  }
+  },
+  "snyk": true
 }
