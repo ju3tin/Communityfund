@@ -6,12 +6,12 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "body-parser": "1.14.x",
+    "body-parser": "1.20.4",
     "cloudant": "1.4.x",
     "connect-multiparty": "^2.0.0",
     "ejs": "2.4.x",
     "errorhandler": "1.4.x",
-    "express": "4.13.x",
+    "express": "4.22.0",
     "express-session": "^1.15.2",
     "method-override": "2.3.x",
     "morgan": "1.6.x",
